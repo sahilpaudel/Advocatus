@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Advocatus</string>
+    <string name="facebook_app_id">192885334523318</string>
+    <string name="fb_login_protocol_scheme">fb192885334523318</string>
+</resources>
