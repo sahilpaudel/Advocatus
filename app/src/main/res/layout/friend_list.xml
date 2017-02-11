@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@drawable/selector"
+    android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/friend_pic"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/com_facebook_profile_picture_blank_square"
+            android:scaleType="fitCenter"/>
+        <TextView
+            android:id="@+id/friend_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Sahil Paudel"
+            android:layout_alignParentTop="true"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/friend_pic"/>
+        <TextView
+            android:id="@+id/friend_id"
+            android:text="11303588"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/friend_pic"
+            android:layout_below="@id/friend_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+</RelativeLayout>

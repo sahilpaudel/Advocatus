@@ -1,4 +1,4 @@
-package com.sahilpaudel.app.advocatus;
+package com.sahilpaudel.app.advocatus.facebook;
 
 import android.app.Application;
 

@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "296638929526",
+    "firebase_url": "https://advocatus-40d09.firebaseio.com",
+    "project_id": "advocatus-40d09",
+    "storage_bucket": "advocatus-40d09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296638929526:android:52409e6b538378d6",
+        "android_client_info": {
+          "package_name": "com.sahilpaudel.app.advocatus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296638929526-okdjk2ddse60qgit8frqlld8isl61g5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sahilpaudel.app.advocatus",
+            "certificate_hash": "54ED510A9B3FC509C9A3634B7E3AC28137DFEF2F"
+          }
+        },
+        {
+          "client_id": "296638929526-u00beu0i8nl28kmroh0f9slve6bmfsfm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296638929526-u00beu0i8nl28kmroh0f9slve6bmfsfm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

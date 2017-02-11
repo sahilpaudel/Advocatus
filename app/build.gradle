@@ -5,6 +5,11 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.sahilpaudel.app.advocatus"
+
+        manifestPlaceholders = [onesignal_app_id: "ac588eea-577d-4804-8449-a8724138accf",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "296638929526"]
+
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -28,5 +33,10 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.jaredrummler:material-spinner:1.1.0'
+
+
     testCompile 'junit:junit:4.12'
 }
