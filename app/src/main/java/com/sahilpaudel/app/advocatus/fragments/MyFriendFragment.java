@@ -1,35 +1,54 @@
-package com.sahilpaudel.app.advocatus.facebook;
+package com.sahilpaudel.app.advocatus.fragments;
+
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.sahilpaudel.app.advocatus.HomeActivity;
 import com.sahilpaudel.app.advocatus.R;
+import com.sahilpaudel.app.advocatus.facebook.ClickListener;
+import com.sahilpaudel.app.advocatus.facebook.Friends;
+import com.sahilpaudel.app.advocatus.facebook.RecyclerTouchListener;
+import com.sahilpaudel.app.advocatus.facebook.RecyclerViewAdapter;
+import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
+import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class FriendListActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class MyFriendFragment extends Fragment {
 
     RecyclerView recyclerView;
     List<Friends> mList_friends = new ArrayList<>();
     RecyclerViewAdapter mRecyclerViewAdapter;
     Context context;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_list);
+    public MyFriendFragment() {
+    }
 
-        context = getApplicationContext();
-        String userName = getIntent().getStringExtra("FRIEND_NAME");
-        String userId = getIntent().getStringExtra("FRIEND_ID");
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_my_friend, container, false);
+
+
+        String userName = SharedPrefFacebook.getmInstance(getActivity()).getUserName();
+        String userId = SharedPrefFacebook.getmInstance(getActivity()).getUserId();
+
 
         String s = userName.replaceAll("\\[","");
         s = s.replaceAll("\\]","");
@@ -53,18 +72,17 @@ public class FriendListActivity extends AppCompatActivity {
             mList_friends.add(mFriends);
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerViewAdapter = new RecyclerViewAdapter(context,mList_friends);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
-        //recyclerView.setBackgroundColor(Color.parseColor("#004d40"));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         recyclerView.setAdapter(mRecyclerViewAdapter);
 
         mRecyclerViewAdapter.notifyDataSetChanged();
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
 
             ArrayList selected = new ArrayList<>(Collections.nCopies(len,""));
             ArrayList<Integer> flag = new ArrayList<>(Collections.nCopies(len,0));
@@ -90,5 +108,8 @@ public class FriendListActivity extends AppCompatActivity {
             }
         }));
 
+
+        return view;
     }
+
 }

@@ -23,11 +23,12 @@
         <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
 
     </style>
-    <style name="EditTextPost" parent="Widget.AppCompat.EditText">
-    <item name="android:padding">5dp</item>
-    <item name="android:background">#eeeeee</item>
-    <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
 
-</style>
+    <style name="EditTextPost" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">#eeeeee</item>
+        <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
+
+    </style>
 
 </resources>
