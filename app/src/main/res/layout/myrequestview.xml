@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:scaleType="fitXY"
+        android:layout_height="80dp"
+        android:id="@+id/poster_pic"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="User Name"
+        android:id="@+id/tv_posterName"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster_pic"
+        android:layout_toLeftOf="@+id/nohelpers"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="price"
+        android:id="@+id/nohelpers"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/timeTable"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/tv_posterName"
+        android:layout_toRightOf="@id/poster_pic"
+        android:layout_toEndOf="@id/poster_pic"
+        android:textColor="#666"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="post"
+        android:id="@+id/userPost"
+        android:layout_marginLeft="15dp"
+        android:layout_below="@id/timeTable"
+        android:textColor="#666"
+        android:layout_toRightOf="@id/poster_pic"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:maxLines="2"
+        android:gravity="top"/>
+
+</RelativeLayout>

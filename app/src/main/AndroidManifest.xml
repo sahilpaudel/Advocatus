@@ -38,22 +38,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".notification.NotificationActivity"></activity>
-
-        <service
-            android:name=".notification.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".notification.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
 
         <activity
             android:name=".HomeActivity"

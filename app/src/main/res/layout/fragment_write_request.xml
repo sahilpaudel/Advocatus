@@ -65,13 +65,15 @@
         android:layout_marginTop="16dp">
 
         <EditText
-            android:hint="2017/12/12"
+            android:hint="1994/11/05"
+            android:text="2017/11/05"
             android:id="@+id/startTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"/>
         <EditText
-            android:hint="2017/12/12"
+            android:hint="2017/11/05"
+            android:text="2017/11/05"
             android:id="@+id/endTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -73,7 +73,7 @@ public class MyFriendFragment extends Fragment {
         }
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        mRecyclerViewAdapter = new RecyclerViewAdapter(context,mList_friends);
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(),mList_friends);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
