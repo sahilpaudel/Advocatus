@@ -3,10 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#192231</item>
+        <item name="colorPrimaryDark">@color/cardview_dark_background</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="textAppearance">#777777</item>
+        <item name="android:textColorPrimary">#FFffFF</item>
+
+        <item name="android:textColor">#ffffff</item>
+
+
     </style>
+
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -19,7 +26,7 @@
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:padding">5dp</item>
-        <item name="android:background">#283593</item>
+        <item name="android:background">#ffffff</item>
         <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
 
     </style>
@@ -30,5 +37,6 @@
         <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
 
     </style>
+
 
 </resources>

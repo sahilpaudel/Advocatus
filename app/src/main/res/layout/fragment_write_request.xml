@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sahilpaudel.app.advocatus.fragments.WriteRequestFragment">
+    tools:context="com.sahilpaudel.app.advocatus.fragments.WriteRequestFragment"
+    android:background="@drawable/background_all_pages">
 
     <TextView
         android:hint="ASK FOR HELP"
@@ -13,14 +14,19 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:typeface="sans"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        />
     <com.jaredrummler.materialspinner.MaterialSpinner
         android:id="@+id/requestCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_below="@id/textDisplay"/>
+        android:layout_below="@id/textDisplay"
+    />
     <EditText
         android:id="@+id/writepost"
         android:layout_width="match_parent"
@@ -31,7 +37,7 @@
         android:layout_marginRight="16dp"
         android:inputType="textMultiLine"
         android:gravity="top"
-        style="@style/EditTextPost"/>
+        android:background="@drawable/rounded_corners"/>
 
     <LinearLayout
         android:id="@+id/textHint"
@@ -44,11 +50,13 @@
 
         <TextView
             android:text="Enter Start Date"
+            android:background="@drawable/rounded_corners_second"
             android:id="@+id/startTimeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp" />
         <TextView
+            android:background="@drawable/rounded_corners_second"
             android:text="Enter End Date"
             android:id="@+id/endTimeText"
             android:layout_width="wrap_content"
@@ -62,6 +70,7 @@
         android:layout_below="@id/textHint"
         android:orientation="horizontal"
         android:gravity="center"
+        android:id="@+id/linear1"
         android:layout_marginTop="16dp">
 
         <EditText
@@ -69,7 +78,8 @@
             android:id="@+id/startTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"/>
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"/>
         <EditText
             android:hint="2017/12/12"
             android:id="@+id/endTime"
@@ -79,13 +89,13 @@
     </LinearLayout>
 
     <Button
+        android:layout_below="@+id/linear1"
         android:id="@+id/buttonSubmit"
         android:text="SUBMIT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentBottom="true"/>
+        android:background="@drawable/button_color"/>
 
 </RelativeLayout>

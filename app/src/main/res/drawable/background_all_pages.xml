@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  res/drawable/edittext_rounded_corners.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" android:state_focused="true">
+        <shape>
+            <!-- HERE, you have where you add borders -->
+            <corners
+                android:radius="15dp" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true" android:state_focused="false">
+        <shape>
+            <corners
+                android:radius="15dp" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="false" android:state_focused="true">
+        <shape>
+            <corners
+                android:radius="15dp" />
+        </shape>
+    </item>
+
+    <item android:state_pressed="false" android:state_focused="false">
+        <shape>
+            <gradient
+                android:startColor="#A9A9A9"
+                android:centerColor="#A9A9A9"
+                android:endColor="#A9A9A9"
+                android:angle="270"
+                />
+            <stroke
+                android:width="0.7dp"
+                android:color="#A9A9A9" />
+
+        </shape>
+    </item>
+
+    <item android:state_enabled="true">
+        <shape>
+
+        </shape>
+    </item>
+
+</selector>

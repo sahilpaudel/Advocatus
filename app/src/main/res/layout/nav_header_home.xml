@@ -17,7 +17,8 @@
         android:layout_height="50dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher"
+        android:background="@drawable/img"/>
 
     <TextView
         android:id="@+id/textUserName"
