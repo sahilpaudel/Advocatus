@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    tools:context="com.sahilpaudel.app.advocatus.fragments.SinglePostViewFragment">
+
+   <RelativeLayout
+       android:id="@+id/topView"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:scaleType="fitXY"
+        android:layout_height="80dp"
+        android:id="@+id/poster_pic_1"
+        android:src="@drawable/com_facebook_profile_picture_blank_portrait"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="User Name"
+        android:id="@+id/tv_posterName_1"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/poster_pic_1"
+        android:layout_toLeftOf="@+id/nohelpers_1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="price"
+        android:id="@+id/nohelpers_1"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/timeTable_1"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/tv_posterName_1"
+        android:layout_toRightOf="@id/poster_pic_1"
+        android:layout_toEndOf="@id/poster_pic_1"
+        android:textColor="#666"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="My Name is Khan And I Am Not A Terrorist"
+        android:id="@+id/userPost_1"
+        android:layout_marginLeft="15dp"
+        android:textColor="#666"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp" />
+    <Button
+        android:text="HELP"
+        android:id="@+id/buttonhelp_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userPost_1"/>
+
+    <Button
+        android:text="PASS"
+        android:id="@+id/buttonPass_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userPost_1"
+        android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</RelativeLayout>

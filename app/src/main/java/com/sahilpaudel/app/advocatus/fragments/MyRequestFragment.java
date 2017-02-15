@@ -1,9 +1,11 @@
 package com.sahilpaudel.app.advocatus.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +22,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sahilpaudel.app.advocatus.Feeds;
 import com.sahilpaudel.app.advocatus.HomeActivity;
 import com.sahilpaudel.app.advocatus.MyRequestPost;
 import com.sahilpaudel.app.advocatus.MyRequestViewAdapter;
 import com.sahilpaudel.app.advocatus.R;
+import com.sahilpaudel.app.advocatus.facebook.ClickListener;
+import com.sahilpaudel.app.advocatus.facebook.RecyclerTouchListener;
 import com.sahilpaudel.app.advocatus.facebook.RecyclerViewAdapter;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
@@ -45,9 +50,11 @@ public class MyRequestFragment extends Fragment {
 
     RecyclerView recyclerView;
     MyRequestViewAdapter myRequestViewAdapter;
+
+    ProgressDialog mProgressDialog;
+
     public MyRequestFragment() {
         // Required empty public constructor
-
     }
 
     @Override
@@ -57,7 +64,7 @@ public class MyRequestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_request, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.myRequestRecyclerView);
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
-
+        mProgressDialog = ProgressDialog.show(getActivity(),"Please wait.","Your request are being loaded");
         StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/getPostById.php", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -77,15 +84,22 @@ public class MyRequestFragment extends Fragment {
                             String startTime = data.getString("startTime");
                             String endTime = data.getString("endTime");
                             String no_of_helpers = data.getString("no_of_helpers");
+                            String fb = data.getString("facebook_id");
+
 
 
                             MyRequestPost myPost = new MyRequestPost();
+                            myPost.firstName = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(0);
+                            myPost.lastName = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(1);
                             myPost.description = description;
                             myPost.startTime = startTime;
                             myPost.endTime = endTime;
                             myPost.no_of_helpers = no_of_helpers;
+                            myPost.facebook_id = fb;
 
                             myRequestPost.add(myPost);
+
+                            mProgressDialog.dismiss();
                         }
 
                         myRequestViewAdapter = new MyRequestViewAdapter(getActivity(),myRequestPost);
@@ -96,6 +110,29 @@ public class MyRequestFragment extends Fragment {
                         recyclerView.setAdapter(myRequestViewAdapter);
 
                         myRequestViewAdapter.notifyDataSetChanged();
+
+                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
+                                Fragment fragment = new SinglePostViewFragment();
+                                MyRequestPost feeds = myRequestPost.get(position);
+                                Bundle args = new Bundle();
+                                args.putString("DATA",feeds.toString());
+                                fragment.setArguments(args);
+
+                                if(fragment != null) {
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.contentFragment, fragment);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                            }
+
+                            @Override
+                            public void onLongClick(View view, int position) {
+
+                            }
+                        }));
                     }else {
                         Toast.makeText(getActivity(), "FAILED", Toast.LENGTH_SHORT).show();
                     }

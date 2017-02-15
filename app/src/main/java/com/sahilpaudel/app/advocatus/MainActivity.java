@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 params.put("first_name",fName);
                 params.put("last_name",lName);
                 params.put("email",userEmail);
-                params.put("facebook",fb_id);
+                params.put("facebook_id",fb_id);
                 return params;
             }
         };

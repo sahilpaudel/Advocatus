@@ -1,8 +1,10 @@
 package com.sahilpaudel.app.advocatus.fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.sahilpaudel.app.advocatus.Feeds;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.UserFeedAdapter;
+import com.sahilpaudel.app.advocatus.facebook.ClickListener;
+import com.sahilpaudel.app.advocatus.facebook.RecyclerTouchListener;
 import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
 
 import org.json.JSONArray;
@@ -37,6 +41,8 @@ public class HomeFragment extends Fragment {
     UserFeedAdapter userFeedAdapter;
     List<Feeds> mFeedList;
 
+    ProgressDialog mProgressDialog;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -48,6 +54,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView)view.findViewById(R.id.myFeedRecyclerView);
+
+        mProgressDialog = ProgressDialog.show(getActivity(),"Please wait.","Feeds are being loaded",false);
 
         StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/getPost.php", new Response.Listener<String>() {
             @Override
@@ -70,6 +78,7 @@ public class HomeFragment extends Fragment {
                             String startTime = data.getString("startTime");
                             String endTime = data.getString("endTime");
                             String no_of_helpers = data.getString("no_of_helpers");
+                            String facebook_id = data.getString("facebook_id");
 
 
                             Feeds myPost = new Feeds();
@@ -79,8 +88,10 @@ public class HomeFragment extends Fragment {
                             myPost.startTime = startTime;
                             myPost.endTime = endTime;
                             myPost.no_of_helpers = no_of_helpers;
+                            myPost.facebook_id = facebook_id;
 
                             mFeedList.add(myPost);
+                            mProgressDialog.dismiss();
                         }
 
                         userFeedAdapter = new UserFeedAdapter(getActivity(),mFeedList);
@@ -91,6 +102,30 @@ public class HomeFragment extends Fragment {
                         recyclerView.setAdapter(userFeedAdapter);
 
                         userFeedAdapter.notifyDataSetChanged();
+
+                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+                            @Override
+                            public void onClick(View view, int position) {
+                                Fragment fragment = new SinglePostViewFragment();
+                                Feeds feeds = mFeedList.get(position);
+                                //Toast.makeText(getActivity(), feeds.facebook_id, Toast.LENGTH_SHORT).show();
+                                Bundle args = new Bundle();
+                                args.putString("DATA",feeds.toString());
+                                fragment.setArguments(args);
+
+                                if(fragment != null) {
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.contentFragment, fragment);
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                            }
+
+                            @Override
+                            public void onLongClick(View view, int position) {
+
+                            }
+                        }));
                     }else {
                         Toast.makeText(getActivity(), "FAILED", Toast.LENGTH_SHORT).show();
                     }

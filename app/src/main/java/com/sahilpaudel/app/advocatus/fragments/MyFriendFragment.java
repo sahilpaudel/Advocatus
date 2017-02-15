@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sahilpaudel.app.advocatus.HomeActivity;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.facebook.ClickListener;
 import com.sahilpaudel.app.advocatus.facebook.Friends;

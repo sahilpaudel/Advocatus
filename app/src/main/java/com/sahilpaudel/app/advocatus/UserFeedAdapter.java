@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
+import com.sahilpaudel.app.advocatus.imageview.PicasoRoundedCornerTransformation;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -56,12 +57,9 @@ public class UserFeedAdapter extends RecyclerView.Adapter<UserFeedAdapter.MyView
         Feeds feed = list.get(position);
         tv_posterName.setText(feed.firstName+" "+feed.lastName);
         tv_timeTable.setText(feed.startTime+" to "+feed.endTime);
-//        String imageUrl = "https://graph.facebook.com/" + SharedPrefFacebook
-//                .getmInstance(context)
-//                .getUserInfo()
-//                .get(3) + "/picture?type=large";
+        String imageUrl = "https://graph.facebook.com/" + feed.facebook_id + "/picture?type=large";
 
-        //Picasso.with(context).load(imageUrl).into(poster_profile);
+        Picasso.with(context).load(imageUrl).transform(new PicasoRoundedCornerTransformation()).into(poster_profile);
         tv_numofhelpers.setText(feed.no_of_helpers);
         userPost.setText(feed.description);
     }
