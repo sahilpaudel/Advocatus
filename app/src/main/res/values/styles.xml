@@ -3,11 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#192231</item>
+        <item name="colorPrimary">#138d75</item>
         <item name="colorPrimaryDark">@color/cardview_dark_background</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="textAppearance">#777777</item>
-        <item name="android:textColorPrimary">#FFffFF</item>
+
+        <item name="android:textColorPrimary">#000000</item>
 
         <item name="android:textColor">#ffffff</item>
 
