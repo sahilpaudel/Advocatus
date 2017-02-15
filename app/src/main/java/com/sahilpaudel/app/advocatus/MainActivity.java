@@ -22,6 +22,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.onesignal.OneSignal;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 
 import org.json.JSONArray;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     String email;
     String firstName;
     String lastName;
+    String facebook_id;
 
     private final static String URL_ISEXIST = "https://advocatus.azurewebsites.net/api/isExist.php";
     private final static String URL_CREATE_USER = "https://advocatus.azurewebsites.net/api/createUser.php";
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
+        OneSignal.startInit(this).init();
         setContentView(R.layout.activity_main);
         FBbutton = (LoginButton) findViewById(R.id.FBLoginButton);
 
@@ -75,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
 
-                                    String id = object.getString("id");
-                                    String firstName = object.getString("first_name");
-                                    String lastName = object.getString("last_name");
+                                    facebook_id = object.getString("id");
+                                    firstName = object.getString("first_name");
+                                    lastName = object.getString("last_name");
                                     //String gender = object.getString("gender");
-                                    String email = object.getString("email");
+                                    email = object.getString("email");
 
                                     userId = new ArrayList<>();
                                     userName = new ArrayList<>();
@@ -91,11 +94,14 @@ public class MainActivity extends AppCompatActivity {
                                         userName.add(array.getJSONObject(i).getString("name"));
                                     }
 
-                                    SharedPrefFacebook.getmInstance(MainActivity.this).saveUserInfo(firstName, lastName, email, id);
+
+
+                                    SharedPrefFacebook.getmInstance(MainActivity.this).saveUserInfo(firstName, lastName, email, facebook_id);
                                     SharedPrefFacebook.getmInstance(MainActivity.this).saveFacebookData(userId.toString(),userName.toString());
 
                                     if(firstName !=null && lastName != null && email != null)
                                         isExist(email);
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -153,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Volley Error : isExist"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -175,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
         final String userEmail = email;
         final String fName = firstName;
         final String lName = lastName;
-
+        final String fb_id = SharedPrefFacebook.getmInstance(MainActivity.this).getUserInfo().get(3);
+       // Toast.makeText(this, fb_id, Toast.LENGTH_SHORT).show();
         StringRequest request = new StringRequest(Request.Method.POST, URL_CREATE_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -190,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Volley Error : create new"+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -199,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 params.put("first_name",fName);
                 params.put("last_name",lName);
                 params.put("email",userEmail);
+                params.put("facebook_id",fb_id);
                 return params;
             }
         };

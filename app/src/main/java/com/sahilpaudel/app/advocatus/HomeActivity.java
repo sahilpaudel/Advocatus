@@ -1,5 +1,6 @@
 package com.sahilpaudel.app.advocatus;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 
+import com.sahilpaudel.app.advocatus.fragments.HomeFragment;
 import com.sahilpaudel.app.advocatus.fragments.MyFriendFragment;
 import com.sahilpaudel.app.advocatus.fragments.MyProfileFragment;
 import com.sahilpaudel.app.advocatus.fragments.MyRequestFragment;
@@ -52,6 +54,14 @@ public class HomeActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Fragment fragment = new HomeFragment();
+
+        if(fragment != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.commit();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +143,9 @@ public class HomeActivity extends AppCompatActivity
 
         switch (itemId) {
 
+            case R.id.nav_home :
+                fragment = new HomeFragment();
+                break;
             case R.id.nav_camera :
                 fragment = new MyRequestFragment();
                 break;
@@ -161,38 +174,5 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         displaySelectedScreen(item.getItemId());
         return true;
-    }
-
-    public void FetchPost(String email) {
-
-        final String mail = email;
-
-        StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/getPost.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject object = new JSONObject(response);
-                    String success = object.getString("success");
-                    Toast.makeText(HomeActivity.this, success, Toast.LENGTH_SHORT).show();
-                }catch (Exception e){
-                    Toast.makeText(HomeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("email",mail);
-                return params;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request);
     }
 }

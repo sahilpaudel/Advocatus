@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sahilpaudel.app.advocatus.HomeActivity;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.facebook.ClickListener;
 import com.sahilpaudel.app.advocatus.facebook.Friends;
@@ -73,7 +72,7 @@ public class MyFriendFragment extends Fragment {
         }
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        mRecyclerViewAdapter = new RecyclerViewAdapter(context,mList_friends);
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(),mList_friends);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
