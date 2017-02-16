@@ -18,7 +18,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:scaleType="fitCenter"
         android:src="@mipmap/ic_launcher"
-        android:background="@drawable/img"/>
+      />
 
     <TextView
         android:id="@+id/textUserName"
@@ -33,5 +33,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com" />
-
 </LinearLayout>
