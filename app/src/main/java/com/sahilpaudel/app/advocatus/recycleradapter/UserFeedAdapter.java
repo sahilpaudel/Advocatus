@@ -1,4 +1,4 @@
-package com.sahilpaudel.app.advocatus;
+package com.sahilpaudel.app.advocatus.recycleradapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,26 +8,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
+import com.sahilpaudel.app.advocatus.R;
+import com.sahilpaudel.app.advocatus.dataprovider.Feeds;
+import com.sahilpaudel.app.advocatus.imageview.PicasoRoundedCornerTransformation;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Sahil Paudel on 2/13/2017.
+ * Created by Sahil Paudel on 2/14/2017.
  */
 
-public class MyRequestViewAdapter extends RecyclerView.Adapter<MyRequestViewAdapter.MyViewHolder> {
+public class UserFeedAdapter extends RecyclerView.Adapter<UserFeedAdapter.MyViewHolder>{
 
 
-    List<MyRequestPost> list;
+    List<Feeds> list;
     Context context;
 
     public TextView tv_posterName, tv_timeTable, tv_numofhelpers,userPost;
     public ImageView poster_profile;
 
-    public MyRequestViewAdapter(Context context, List<MyRequestPost> list) {
+    public UserFeedAdapter(Context context, List<Feeds> list) {
         this.list = list;
         this.context = context;
     }
@@ -46,25 +47,20 @@ public class MyRequestViewAdapter extends RecyclerView.Adapter<MyRequestViewAdap
     }
 
     @Override
-    public MyRequestViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserFeedAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.myrequestview,parent,false);
-        return new MyRequestViewAdapter.MyViewHolder(itemView);
+                .inflate(R.layout.myfeeds,parent,false);
+        return new UserFeedAdapter.MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyRequestViewAdapter.MyViewHolder holder, int position) {
-        MyRequestPost feed = list.get(position);
-        String fname = SharedPrefFacebook.getmInstance(context).getUserInfo().get(0);
-        String lname = SharedPrefFacebook.getmInstance(context).getUserInfo().get(1);
-        tv_posterName.setText(fname+" "+lname);
+    public void onBindViewHolder(UserFeedAdapter.MyViewHolder holder, int position) {
+        Feeds feed = list.get(position);
+        tv_posterName.setText(feed.firstName+" "+feed.lastName);
         tv_timeTable.setText(feed.startTime+" to "+feed.endTime);
-        String imageUrl = "https://graph.facebook.com/" + SharedPrefFacebook
-                .getmInstance(context)
-                .getUserInfo()
-                .get(3) + "/picture?type=large";
+        String imageUrl = "https://graph.facebook.com/" + feed.facebook_id + "/picture?type=large";
 
-        Picasso.with(context).load(imageUrl).into(poster_profile);
+        Picasso.with(context).load(imageUrl).transform(new PicasoRoundedCornerTransformation()).into(poster_profile);
         tv_numofhelpers.setText(feed.no_of_helpers);
         userPost.setText(feed.description);
     }

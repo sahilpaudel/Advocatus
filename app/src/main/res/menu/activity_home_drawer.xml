@@ -23,6 +23,10 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="My Profile" />
+        <item
+            android:id="@+id/nav_pendingrequest"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Pending Request" />
     </group>
 
     <item android:title="Communicate">

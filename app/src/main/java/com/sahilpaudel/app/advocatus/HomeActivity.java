@@ -32,6 +32,7 @@ import com.sahilpaudel.app.advocatus.fragments.HomeFragment;
 import com.sahilpaudel.app.advocatus.fragments.MyFriendFragment;
 import com.sahilpaudel.app.advocatus.fragments.MyProfileFragment;
 import com.sahilpaudel.app.advocatus.fragments.MyRequestFragment;
+import com.sahilpaudel.app.advocatus.fragments.PendingRequestFragment;
 import com.sahilpaudel.app.advocatus.fragments.WriteRequestFragment;
 import com.squareup.picasso.Picasso;
 
@@ -157,6 +158,9 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_slideshow :
                 fragment = new MyFriendFragment();
+                break;
+            case R.id.nav_pendingrequest :
+                fragment = new PendingRequestFragment();
                 break;
         }
 

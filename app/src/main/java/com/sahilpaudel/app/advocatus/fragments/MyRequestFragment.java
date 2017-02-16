@@ -1,15 +1,12 @@
 package com.sahilpaudel.app.advocatus.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +19,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.sahilpaudel.app.advocatus.Feeds;
-import com.sahilpaudel.app.advocatus.HomeActivity;
-import com.sahilpaudel.app.advocatus.MyRequestPost;
-import com.sahilpaudel.app.advocatus.MyRequestViewAdapter;
+import com.sahilpaudel.app.advocatus.dataprovider.MyRequestPost;
+import com.sahilpaudel.app.advocatus.recycleradapter.MyRequestViewAdapter;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.facebook.ClickListener;
 import com.sahilpaudel.app.advocatus.facebook.RecyclerTouchListener;
-import com.sahilpaudel.app.advocatus.facebook.RecyclerViewAdapter;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
 
@@ -37,11 +31,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class MyRequestFragment extends Fragment {
 
@@ -96,6 +88,7 @@ public class MyRequestFragment extends Fragment {
                             myPost.endTime = endTime;
                             myPost.no_of_helpers = no_of_helpers;
                             myPost.facebook_id = fb;
+                            myPost.post_id = post_id;
 
                             myRequestPost.add(myPost);
 

@@ -19,9 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.sahilpaudel.app.advocatus.Feeds;
+import com.sahilpaudel.app.advocatus.dataprovider.Feeds;
 import com.sahilpaudel.app.advocatus.R;
-import com.sahilpaudel.app.advocatus.UserFeedAdapter;
+import com.sahilpaudel.app.advocatus.recycleradapter.UserFeedAdapter;
 import com.sahilpaudel.app.advocatus.facebook.ClickListener;
 import com.sahilpaudel.app.advocatus.facebook.RecyclerTouchListener;
 import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
                             myPost.endTime = endTime;
                             myPost.no_of_helpers = no_of_helpers;
                             myPost.facebook_id = facebook_id;
-
+                            myPost.post_id = post_id;
                             mFeedList.add(myPost);
                             mProgressDialog.dismiss();
                         }

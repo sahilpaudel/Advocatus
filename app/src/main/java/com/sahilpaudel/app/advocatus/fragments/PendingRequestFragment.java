@@ -1,13 +1,38 @@
 package com.sahilpaudel.app.advocatus.fragments;
 
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.sahilpaudel.app.advocatus.R;
+import com.sahilpaudel.app.advocatus.dataprovider.PendingRequest;
+import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
+import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
+import com.sahilpaudel.app.advocatus.recycleradapter.PendingRequestAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +40,12 @@ import com.sahilpaudel.app.advocatus.R;
 public class PendingRequestFragment extends Fragment {
 
 
+    ProgressDialog progressDialog;
+    RecyclerView recyclerView;
+    PendingRequestAdapter pendingRequestAdapter;
+    List<PendingRequest> myPendingRequest;
+    String facebook_id;
+    private static final String CONF_HELP = "https://advocatus.azurewebsites.net/api/getPendingRequest.php";
     public PendingRequestFragment() {
         // Required empty public constructor
     }
@@ -24,7 +55,86 @@ public class PendingRequestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pending_request, container, false);
+        View view = inflater.inflate(R.layout.fragment_pending_request, container, false);
+        recyclerView = (RecyclerView)view.findViewById(R.id.pendingRecycler);
+        myPendingRequest = new ArrayList<>();
+
+        facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
+
+        progressDialog = ProgressDialog.show(getActivity(),"Plaese wait.","Notifications are buzzing", false, false);
+        StringRequest request = new StringRequest(Request.Method.POST, CONF_HELP, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject object = new JSONObject(response);
+                    String success = object.getString("success");
+
+                    if(success.equals("true")) {
+
+                        JSONArray array = object.getJSONArray("data");
+
+                        for(int i = 0; i < array.length(); i++) {
+                            JSONObject data = array.getJSONObject(i);
+
+                            String post_id = data.getString("post_id");
+                            String description = data.getString("description");
+                            String startTime = data.getString("startTime");
+                            String endTime = data.getString("endTime");
+                            String no_of_helpers = data.getString("no_of_helpers");
+                            String fb = data.getString("facebook_id");
+                            String firstName = data.getString("first_name");
+                            String lastName = data.getString("last_name");
+
+                            PendingRequest request = new PendingRequest();
+                            request.post_id = post_id;
+                            request.description = description;
+                            request.facebook_id = fb;
+                            request.firstName = firstName;
+                            request.lastName = lastName;
+                            request.no_of_helpers = no_of_helpers;
+                            request.startTime = startTime;
+                            request.endTime = endTime;
+                            myPendingRequest.add(request);
+                        }
+                        pendingRequestAdapter = new PendingRequestAdapter(getActivity(), myPendingRequest);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+                        recyclerView.setAdapter(pendingRequestAdapter);
+                        pendingRequestAdapter.notifyDataSetChanged();
+
+                        progressDialog.dismiss();
+
+                    }else{
+                        Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String, String> params = new HashMap<>();
+                params.put("facebook_id", facebook_id);
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        queue.add(request);
+
+        return view;
     }
+
 
 }
