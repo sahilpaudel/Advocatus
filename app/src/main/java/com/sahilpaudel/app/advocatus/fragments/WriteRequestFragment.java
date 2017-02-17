@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.HomeActivity;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
@@ -80,7 +81,7 @@ public class WriteRequestFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/createPost.php", new Response.Listener<String>() {
+                StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_POST, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if(response.equals("1")) {
@@ -129,7 +130,7 @@ public class WriteRequestFragment extends Fragment {
 
         final String str1 = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(0);
         final String str2 = category;
-        StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/getNotification.php", new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_NOTIFICATION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equals("1")) {

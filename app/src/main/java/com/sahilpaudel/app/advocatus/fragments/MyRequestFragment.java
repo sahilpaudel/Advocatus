@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.dataprovider.MyRequestPost;
 import com.sahilpaudel.app.advocatus.recycleradapter.MyRequestViewAdapter;
 import com.sahilpaudel.app.advocatus.R;
@@ -57,7 +58,7 @@ public class MyRequestFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.myRequestRecyclerView);
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
         mProgressDialog = ProgressDialog.show(getActivity(),"Please wait.","Your request are being loaded");
-        StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/getPostById.php", new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GETPOST_BYID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -128,16 +129,19 @@ public class MyRequestFragment extends Fragment {
                         }));
                     }else {
                         Toast.makeText(getActivity(), "FAILED", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
                     }
 
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Exception : "+e, Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+                    mProgressDialog.dismiss();;
+                    Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
+                    //e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mProgressDialog.dismiss();
                 Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
             }
         }){

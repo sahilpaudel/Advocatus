@@ -162,6 +162,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_pendingrequest :
                 fragment = new PendingRequestFragment();
                 break;
+            case R.id.nav_profile :
+                fragment = new MyProfileFragment();
+                break;
         }
 
         if(fragment != null) {

@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.dataprovider.PendingRequest;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
@@ -45,7 +46,7 @@ public class PendingRequestFragment extends Fragment {
     PendingRequestAdapter pendingRequestAdapter;
     List<PendingRequest> myPendingRequest;
     String facebook_id;
-    private static final String CONF_HELP = "https://advocatus.azurewebsites.net/api/getPendingRequest.php";
+
     public PendingRequestFragment() {
         // Required empty public constructor
     }
@@ -62,7 +63,7 @@ public class PendingRequestFragment extends Fragment {
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
 
         progressDialog = ProgressDialog.show(getActivity(),"Please wait.","Notifications are buzzing", false, false);
-        StringRequest request = new StringRequest(Request.Method.POST, CONF_HELP, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.CONF_HELP, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -115,7 +116,7 @@ public class PendingRequestFragment extends Fragment {
                     }
 
                 }catch (Exception e){
-                    Toast.makeText(getActivity(), "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
             }

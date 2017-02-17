@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.dataprovider.PendingRequest;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
@@ -39,9 +40,6 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
 
     List<PendingRequest> list;
     Context context;
-
-    private static final String ACCEPT_URL = "https://advocatus.azurewebsites.net/api/updatePoints.php";
-
 
     public PendingRequestAdapter(Context context, List<PendingRequest> list) {
             this.context = context;
@@ -107,12 +105,12 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
 
     private void Accept(final String helper) {
 
-        StringRequest request = new StringRequest(Request.Method.POST, ACCEPT_URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.ACCEPT_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equals("1")) {
                     Toast.makeText(context, "Thanks!", Toast.LENGTH_SHORT).show();
-
+                    notifyDataSetChanged();
                 }else{
                     Toast.makeText(context, "Ow snap! something went of the grid.", Toast.LENGTH_SHORT).show();
                 }

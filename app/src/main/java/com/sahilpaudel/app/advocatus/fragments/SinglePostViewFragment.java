@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 import com.squareup.picasso.Picasso;
@@ -43,8 +44,6 @@ public class SinglePostViewFragment extends Fragment {
 
     ProgressDialog progressDialog;
 
-    private static final String CHECK_HELPER = "https://advocatus.azurewebsites.net/api/checkHelper.php";
-    private static final String CREATE_HELPER = "https://advocatus.azurewebsites.net/api/createHelper.php";
     public SinglePostViewFragment() {
         // Required empty public constructor
     }
@@ -105,7 +104,7 @@ public class SinglePostViewFragment extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
-        StringRequest request = new StringRequest(Request.Method.POST, CHECK_HELPER, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.CHECK_HELPER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                     progressDialog.dismiss();
@@ -141,7 +140,7 @@ public class SinglePostViewFragment extends Fragment {
     // to create a new helper if he/she is not already a helper of a post
     private void newHelper() {
 
-        StringRequest request = new StringRequest(Request.Method.POST, CREATE_HELPER, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.CREATE_HELPER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.dismiss();

@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.dataprovider.Feeds;
 import com.sahilpaudel.app.advocatus.R;
 import com.sahilpaudel.app.advocatus.recycleradapter.UserFeedAdapter;
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
 
         mProgressDialog = ProgressDialog.show(getActivity(),"Please wait.","Feeds are being loaded",false);
 
-        StringRequest request = new StringRequest(Request.Method.POST, "https://advocatus.azurewebsites.net/api/getPost.php", new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GETPOST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -128,16 +129,20 @@ public class HomeFragment extends Fragment {
                         }));
                     }else {
                         Toast.makeText(getActivity(), "FAILED", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
                     }
 
                 }catch (Exception e){
-                    e.printStackTrace();
+                    mProgressDialog.dismiss();
+                    Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mProgressDialog.dismiss();
                 Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
+
             }
         }){
 

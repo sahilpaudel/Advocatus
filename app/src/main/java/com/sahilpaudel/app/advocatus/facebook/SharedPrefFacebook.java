@@ -66,4 +66,9 @@ public class SharedPrefFacebook {
         return data;
     }
 
+    public void deleteFB() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(FACEBOOK_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear();
+    }
+
 }

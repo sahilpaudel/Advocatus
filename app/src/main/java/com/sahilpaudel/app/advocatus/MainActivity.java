@@ -47,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
     String lastName;
     String facebook_id;
 
-    private final static String URL_ISEXIST = "https://advocatus.azurewebsites.net/api/isExist.php";
-    private final static String URL_CREATE_USER = "https://advocatus.azurewebsites.net/api/createUser.php";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
                         if(currentAccessToken == null) {
-                            //handle logout
+                            SharedPrefFacebook.getmInstance(MainActivity.this).deleteFB();
                         }
                     }
                 };
@@ -145,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String userEmail = email;
 
-        StringRequest request = new StringRequest(Request.Method.POST, URL_ISEXIST, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_ISEXIST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equals("1")) {
@@ -182,8 +179,8 @@ public class MainActivity extends AppCompatActivity {
         final String fName = firstName;
         final String lName = lastName;
         final String fb_id = SharedPrefFacebook.getmInstance(MainActivity.this).getUserInfo().get(3);
-       // Toast.makeText(this, fb_id, Toast.LENGTH_SHORT).show();
-        StringRequest request = new StringRequest(Request.Method.POST, URL_CREATE_USER, new Response.Listener<String>() {
+        //Toast.makeText(this, fName+" "+lName+" "+email+" "+fb_id, Toast.LENGTH_SHORT).show();
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.trim().equals("1")) {
