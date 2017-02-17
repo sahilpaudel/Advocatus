@@ -1,13 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.sahilpaudel.app.advocatus.fragments.SinglePostViewFragment">
+    android:layout_height="match_parent"
+    tools:context="com.sahilpaudel.app.advocatus.fragments.SinglePostViewFragment"
+    >
 
     <RelativeLayout
+
+        android:layout_marginTop="50dp"
         android:id="@+id/topView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#E5E8E8"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:padding="15dp"
+
+        >
 
         <ImageView
             android:layout_width="60dp"
@@ -39,6 +48,7 @@
             />
 
         <TextView
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -49,13 +59,11 @@
             android:layout_toRightOf="@id/helperImage"
             android:layout_toEndOf="@id/helperImage"
             android:textColor="#666"/>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_below="@id/topView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
+
         <TextView
+            android:layout_below="@+id/helperImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
@@ -66,14 +74,18 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="5dp" />
         <Button
-            android:text="ACCEPT"
+            android:text="Accept"
+            android:background="@drawable/rounded_corners_second"
             android:id="@+id/buttonAccept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_below="@id/postDesc"/>
 
         <Button
             android:text="REJECT"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_corners_second"
             android:id="@+id/buttonReject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
