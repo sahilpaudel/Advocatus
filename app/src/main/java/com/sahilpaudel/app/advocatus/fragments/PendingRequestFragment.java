@@ -61,7 +61,7 @@ public class PendingRequestFragment extends Fragment {
 
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
 
-        progressDialog = ProgressDialog.show(getActivity(),"Plaese wait.","Notifications are buzzing", false, false);
+        progressDialog = ProgressDialog.show(getActivity(),"Please wait.","Notifications are buzzing", false, false);
         StringRequest request = new StringRequest(Request.Method.POST, CONF_HELP, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -85,6 +85,7 @@ public class PendingRequestFragment extends Fragment {
                             String fb = data.getString("facebook_id");
                             String firstName = data.getString("first_name");
                             String lastName = data.getString("last_name");
+                            String helper_id = data.getString("helper_id");
 
                             PendingRequest request = new PendingRequest();
                             request.post_id = post_id;
@@ -95,6 +96,8 @@ public class PendingRequestFragment extends Fragment {
                             request.no_of_helpers = no_of_helpers;
                             request.startTime = startTime;
                             request.endTime = endTime;
+                            request.helper_id = helper_id;
+
                             myPendingRequest.add(request);
                         }
                         pendingRequestAdapter = new PendingRequestAdapter(getActivity(), myPendingRequest);
@@ -113,13 +116,14 @@ public class PendingRequestFragment extends Fragment {
 
                 }catch (Exception e){
                     Toast.makeText(getActivity(), "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

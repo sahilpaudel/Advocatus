@@ -80,10 +80,15 @@ public class SinglePostViewFragment extends Fragment {
 
         //facebook id of user of device
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
+        //if the post facebook_id is same as loggedIn facebook_id then disable the help / pass button
+        if (facebook_id.equals(data[6])) {
+
+            buttonHelp.setVisibility(View.GONE);
+            buttonPass.setVisibility(View.GONE);
+        }
 
         //if already help button is clicked
         oldHelper();
-
 
         buttonHelp.setOnClickListener(new View.OnClickListener() {
             @Override

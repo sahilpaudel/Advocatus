@@ -138,7 +138,7 @@ public class MyRequestFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No data found.", Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

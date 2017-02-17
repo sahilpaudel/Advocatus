@@ -14,6 +14,7 @@ public class PendingRequest {
     public String lastName;
     public String facebook_id;
     public String post_id;
+    public String helper_id;
 
         @Override
         public String toString() {
