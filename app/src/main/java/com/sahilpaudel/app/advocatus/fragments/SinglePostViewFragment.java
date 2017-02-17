@@ -112,10 +112,12 @@ public class SinglePostViewFragment extends Fragment {
 
                     if (response.equals("1")) {
                         buttonHelp.setClickable(true);
-                        buttonHelp.setBackgroundColor(Color.parseColor("#b71c1c"));
+                        buttonHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.rounded_corners_second));
+
+
                     }else{
                         buttonHelp.setClickable(false);
-                        buttonHelp.setBackgroundColor(Color.parseColor("#00695c"));
+                        buttonHelp.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_color_on_click));
                     }
             }
         }, new Response.ErrorListener() {
@@ -149,7 +151,7 @@ public class SinglePostViewFragment extends Fragment {
                 if (response.equals("1")) {
                     Toast.makeText(getActivity(), "Thanks!", Toast.LENGTH_SHORT).show();
                     buttonHelp.setClickable(false);
-                    buttonHelp.setBackgroundColor(Color.parseColor("#00695c"));
+
                 }else{
                     Toast.makeText(getActivity(), "Sorry, Something went wrong", Toast.LENGTH_SHORT).show();
                 }
