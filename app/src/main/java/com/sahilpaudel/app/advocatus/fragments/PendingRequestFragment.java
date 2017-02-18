@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,7 +46,10 @@ public class PendingRequestFragment extends Fragment {
     RecyclerView recyclerView;
     PendingRequestAdapter pendingRequestAdapter;
     List<PendingRequest> myPendingRequest;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     String facebook_id;
+
+    StringRequest request;
 
     public PendingRequestFragment() {
         // Required empty public constructor
@@ -58,15 +62,17 @@ public class PendingRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pending_request, container, false);
         recyclerView = (RecyclerView)view.findViewById(R.id.pendingRecycler);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeToRefresh);
         myPendingRequest = new ArrayList<>();
 
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
 
         progressDialog = ProgressDialog.show(getActivity(),"Please wait.","Notifications are buzzing", false, false);
-        StringRequest request = new StringRequest(Request.Method.POST, Config.CONF_HELP, new Response.Listener<String>() {
+        final RequestQueue queue = Volley.newRequestQueue(getActivity());
+        request = new StringRequest(Request.Method.POST, Config.CONF_HELP, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                mSwipeRefreshLayout.setRefreshing(false);
                 try {
                     JSONObject object = new JSONObject(response);
                     String success = object.getString("success");
@@ -100,6 +106,7 @@ public class PendingRequestFragment extends Fragment {
                             request.helper_id = helper_id;
 
                             myPendingRequest.add(request);
+                            progressDialog.dismiss();
                         }
                         pendingRequestAdapter = new PendingRequestAdapter(getActivity(), myPendingRequest);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -107,9 +114,14 @@ public class PendingRequestFragment extends Fragment {
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
                         recyclerView.setAdapter(pendingRequestAdapter);
-                        pendingRequestAdapter.notifyDataSetChanged();
 
-                        progressDialog.dismiss();
+                        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            @Override
+                            public void onRefresh() {
+                                pendingRequestAdapter.notifyDataSetChanged();
+                                mSwipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
 
                     }else{
                         Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
@@ -135,7 +147,6 @@ public class PendingRequestFragment extends Fragment {
                 return params;
             }
         };
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(request);
 
         return view;

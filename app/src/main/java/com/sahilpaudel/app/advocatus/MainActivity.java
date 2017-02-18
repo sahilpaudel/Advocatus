@@ -36,12 +36,18 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    //facebook login button
     LoginButton FBbutton;
+
+    //Facebook classes
     CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
+
+    //List to store userid and name of friends of loggedIn user
     List<String> userId;
     List<String> userName;
 
+    //variables to store data returned from facebook
     String email;
     String firstName;
     String lastName;
@@ -50,29 +56,45 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Initializing facebook sdk
         FacebookSdk.sdkInitialize(this);
+
+        //initializing one signal sdk
+
         OneSignal.startInit(this).init();
         setContentView(R.layout.activity_main);
+
+        //facebook button reference
         FBbutton = (LoginButton) findViewById(R.id.FBLoginButton);
 
+        //to check whether users previous session is still alive
+        //if no accessToken will be null
         if(isLogin()) {
             Toast.makeText(this, "Is Logged In", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
         }
 
+        //sending the list of required information needed from the user loggedIn using facebook
         FBbutton.setReadPermissions(Arrays.asList("public_profile, email, user_friends,read_custom_friendlists"));
+
+        //Initialize the callback manager
         callbackManager = CallbackManager.Factory.create();
 
+        //register callbackManager to send login request to facebook
         FBbutton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
+                //this method stores the data returned from facebook in json object
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
+
+                                //reading the data from json object
                                 try {
 
                                     facebook_id = object.getString("id");
@@ -85,17 +107,18 @@ public class MainActivity extends AppCompatActivity {
                                     userName = new ArrayList<>();
                                     JSONObject obj = object.getJSONObject("friends");
                                     JSONArray array = obj.getJSONArray("data");
-                                    //textView.setText(array.length());
+
+                                    //traversing the multilevel json array
                                     for(int i = 0; i < array.length(); i++) {
                                         userId.add(array.getJSONObject(i).getString("id"));
                                         userName.add(array.getJSONObject(i).getString("name"));
                                     }
 
-
-
+                                    //storing the users info in the shared preferances for future references
                                     SharedPrefFacebook.getmInstance(MainActivity.this).saveUserInfo(firstName, lastName, email, facebook_id);
                                     SharedPrefFacebook.getmInstance(MainActivity.this).saveFacebookData(userId.toString(),userName.toString());
 
+                                    //after fetching the data, check whether user exist or not
                                     if(firstName !=null && lastName != null && email != null)
                                         isExist(email);
 
@@ -105,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
-
+                //to send request to facebook
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id, name, email, gender, first_name, last_name, friends");
                 request.setParameters(parameters);
@@ -138,6 +161,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //method to check whether user already exist, checking it using facebook email
+    //volley is used to send the email to server page
+    //from where it checks in the database
     public void isExist(String email) {
 
         final String userEmail = email;
@@ -150,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }else{
+
+                    // if user doesn't exist create new user
                     createUserOnServer(firstName, lastName, userEmail);
                 }
             }
@@ -175,16 +203,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void createUserOnServer(String firstName, String lastName, String email) {
 
+        //this sets of data is send to the server using volley
         final String userEmail = email;
         final String fName = firstName;
         final String lName = lastName;
         final String fb_id = SharedPrefFacebook.getmInstance(MainActivity.this).getUserInfo().get(3);
-        //Toast.makeText(this, fName+" "+lName+" "+email+" "+fb_id, Toast.LENGTH_SHORT).show();
+
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.trim().equals("1")) {
-                    //Toast.makeText(MainActivity.this, "isExist : "+response.equals("1"), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }else{
@@ -207,10 +235,8 @@ public class MainActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(request);
-
     }
 
     @Override

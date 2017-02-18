@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,13 +42,12 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     UserFeedAdapter userFeedAdapter;
     List<Feeds> mFeedList;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     ProgressDialog mProgressDialog;
-
+    StringRequest request;
     public HomeFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,20 +56,28 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = (RecyclerView)view.findViewById(R.id.myFeedRecyclerView);
 
+        //reference for swipe refresh layout
+        mSwipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipeToRefresh);
         mProgressDialog = ProgressDialog.show(getActivity(),"Please wait.","Feeds are being loaded",false);
 
-        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GETPOST, new Response.Listener<String>() {
+        //to store the feed data from the server
+        mFeedList = new ArrayList<>();
+
+        //start of volley request from where the data will be fetched
+        final RequestQueue queue = Volley.newRequestQueue(getActivity());
+        request = new StringRequest(Request.Method.POST, Config.URL_GETPOST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                mSwipeRefreshLayout.setRefreshing(false);
                 try {
                     JSONObject object = new JSONObject(response);
                     String success = object.getString("success");
-                    mFeedList = new ArrayList<>();
+
+                    //if success returns true
                     if(success.equals("true")) {
-                        //Toast.makeText(getActivity(), "PASS", Toast.LENGTH_SHORT).show();
                         JSONArray array = object.getJSONArray("data");
-                        //Toast.makeText(getActivity(), array.toString(), Toast.LENGTH_LONG).show();
                         for (int i = 0; i  < array.length(); i++) {
+
                             JSONObject data = array.getJSONObject(i);
 
                             String firstName = data.getString("first_name");
@@ -92,9 +100,12 @@ public class HomeFragment extends Fragment {
                             myPost.facebook_id = facebook_id;
                             myPost.post_id = post_id;
                             mFeedList.add(myPost);
+
+                            //dismiss the dialog where we get the response
                             mProgressDialog.dismiss();
                         }
 
+                        //recycler view adapter
                         userFeedAdapter = new UserFeedAdapter(getActivity(),mFeedList);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                         recyclerView.setLayoutManager(mLayoutManager);
@@ -102,14 +113,49 @@ public class HomeFragment extends Fragment {
                         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
                         recyclerView.setAdapter(userFeedAdapter);
 
-                        userFeedAdapter.notifyDataSetChanged();
+                        //Listener is attached on the swipe to refresh layout
+                        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                            @Override
+                            public void onRefresh() {
 
+                                //a new list is created to avoid the
+                                // addition of old data again on the list
+
+                                //create new list
+                                List<Feeds> feeds = new ArrayList<Feeds>();
+                                //clear old list
+                                mFeedList.clear();
+                                //make the feed blank;
+                                userFeedAdapter.notifyDataSetChanged();
+
+                                //make new request
+                                queue.add(request);
+                                //fill the layout with views
+                                userFeedAdapter = new UserFeedAdapter(getActivity(), mFeedList);
+                                recyclerView.setAdapter(userFeedAdapter);
+
+                                //refill the list with updated data
+                                feeds.addAll(mFeedList);
+                                //populate the recycler view
+                                userFeedAdapter.notifyDataSetChanged();
+
+                            }
+                        });
+
+                        // Configure the refreshing colors
+                        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                                android.R.color.holo_green_light,
+                                android.R.color.holo_orange_light,
+                                android.R.color.holo_red_light);
+
+                        //recyclerview listener
                         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
                             @Override
                             public void onClick(View view, int position) {
+
+                                //fragment to display single feed in one page
                                 Fragment fragment = new SinglePostViewFragment();
                                 Feeds feeds = mFeedList.get(position);
-                                //Toast.makeText(getActivity(), feeds.facebook_id, Toast.LENGTH_SHORT).show();
                                 Bundle args = new Bundle();
                                 args.putString("DATA",feeds.toString());
                                 fragment.setArguments(args);
@@ -148,9 +194,7 @@ public class HomeFragment extends Fragment {
 
         };
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
         queue.add(request);
-
 
         return view;
     }

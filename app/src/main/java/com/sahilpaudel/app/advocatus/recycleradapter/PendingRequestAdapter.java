@@ -92,6 +92,7 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             @Override
             public void onClick(View view) {
                 Accept(holder.helper_id);
+                holder.buttonAccept.setClickable(false);
             }
         });
     }
@@ -110,7 +111,6 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             public void onResponse(String response) {
                 if(response.equals("1")) {
                     Toast.makeText(context, "Thanks!", Toast.LENGTH_SHORT).show();
-                    notifyDataSetChanged();
                 }else{
                     Toast.makeText(context, "Ow snap! something went of the grid.", Toast.LENGTH_SHORT).show();
                 }

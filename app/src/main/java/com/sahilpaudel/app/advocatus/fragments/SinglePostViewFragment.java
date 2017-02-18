@@ -152,7 +152,7 @@ public class SinglePostViewFragment extends Fragment {
                     buttonHelp.setClickable(false);
 
                 }else{
-                    Toast.makeText(getActivity(), "Sorry, Something went wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Sorry, you Already did that!", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
