@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
+ * a simple {@link Fragment} subclass.
  */
 public class WriteRequestFragment extends Fragment {
 
@@ -67,7 +67,7 @@ public class WriteRequestFragment extends Fragment {
         mSubmit = (Button)view.findViewById(R.id.buttonSubmit);
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
 
-        mCategory.setItems("Choose category","Movies", "Trip", "Households", "Lifestyle");
+        mCategory.setItems("Choose category","Movies", "Trip", "Households", "Personal Grooming","Local Visit","Emergency");
         mCategory.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override

@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * a simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
 
