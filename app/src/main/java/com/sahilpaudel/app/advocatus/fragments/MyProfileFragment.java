@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.sahilpaudel.app.advocatus.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * a simple {@link Fragment} subclass.
  */
 public class MyProfileFragment extends Fragment {
 

@@ -26,10 +26,11 @@
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:layout_below="@id/textDisplay"
-    />
+        android:textColorHint="#05ab9a"
+         />
     <EditText
         android:id="@+id/writepost"
-        android:elevation="6dp"
+        android:hint="Details..."
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_below="@id/requestCategory"
@@ -98,6 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_color"/>
 

@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
+ * a simple {@link Fragment} subclass.
  */
 public class PendingRequestFragment extends Fragment {
 
