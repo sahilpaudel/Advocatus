@@ -19,14 +19,16 @@ public class Config {
 
 
 
-    public final static String URL_ISEXIST = "http://022bc53d.ngrok.io/Advocatus/isExist.php";
-    public final static String URL_CREATE_USER = "http://022bc53d.ngrok.io/Advocatus/createUser.php";
-    public final static String URL_CREATE_POST = "http://022bc53d.ngrok.io/Advocatus/createPost.php";
-    public final static String URL_GET_NOTIFICATION = "http://022bc53d.ngrok.io/Advocatus/getNotification.php";
-    public static final String CHECK_HELPER = "http://022bc53d.ngrok.io/Advocatus/checkHelper.php";
-    public static final String CREATE_HELPER = "http://022bc53d.ngrok.io/Advocatus/createHelper.php";
-    public static final String CONF_HELP = "http://022bc53d.ngrok.io/Advocatus/getPendingRequest.php";
-    public static final String URL_GETPOST_BYID = "http://022bc53d.ngrok.io/Advocatus/getPostById.php";
-    public static final String URL_GETPOST = "http://022bc53d.ngrok.io/Advocatus/getPost.php";
-    public static final String ACCEPT_URL = "http://022bc53d.ngrok.io/Advocatus/updatePoints.php";
+    public final static String URL_ISEXIST = "https://1b8679b4.ngrok.io/Advocatus/isExist.php";
+    public final static String URL_CREATE_USER = "https://1b8679b4.ngrok.io/Advocatus/createUser.php";
+    public final static String URL_CREATE_POST = "https://1b8679b4.ngrok.io/Advocatus/createPost.php";
+    public final static String URL_GET_NOTIFICATION = "https://1b8679b4.ngrok.io/Advocatus/getNotification.php";
+    public static final String CHECK_HELPER = "https://1b8679b4.ngrok.io/Advocatus/checkHelper.php";
+    public static final String CREATE_HELPER = "https://1b8679b4.ngrok.io/Advocatus/createHelper.php";
+    public static final String CONF_HELP = "https://1b8679b4.ngrok.io/Advocatus/getPendingRequest.php";
+    public static final String URL_GETPOST_BYID = "https://1b8679b4.ngrok.io/Advocatus/getPostById.php";
+    public static final String URL_GETPOST = "https://1b8679b4.ngrok.io/Advocatus/getPost.php";
+    public static final String ACCEPT_URL = "https://1b8679b4.ngrok.io/Advocatus/updatePoints.php";
+    public static final String URL_GETHELPER = "https://1b8679b4.ngrok.io/Advocatus/getHelper.php";
+    public static final String URL_GET_USER_INFO= "https://1b8679b4.ngrok.io/Advocatus/getUserPoints.php";
 }

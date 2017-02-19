@@ -62,7 +62,6 @@ public class PendingRequestAdapter extends RecyclerView.Adapter<PendingRequestAd
             noofhelpers = (TextView)itemView.findViewById(R.id.no_of_helpers);
             buttonAccept = (Button)itemView.findViewById(R.id.buttonAccept);
             buttonReject = (Button)itemView.findViewById(R.id.buttonReject);
-
         }
     }
 

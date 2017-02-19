@@ -31,9 +31,13 @@ import com.sahilpaudel.app.advocatus.recycleradapter.PendingRequestAdapter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -86,8 +90,16 @@ public class PendingRequestFragment extends Fragment {
 
                             String post_id = data.getString("post_id");
                             String description = data.getString("description");
-                            String startTime = data.getString("startTime");
-                            String endTime = data.getString("endTime");
+                            String tstartTime = data.getString("startTime");
+                            String tendTime = data.getString("endTime");
+
+                            DateFormat df = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+                            Date dstartTime =  df.parse(tstartTime);
+                            Date dendTime = df.parse(tendTime);
+                            DateFormat dtf = new SimpleDateFormat("EEE, MMM d",Locale.ENGLISH);
+                            String startTime = dtf.format(dstartTime);
+                            String endTime = dtf.format(dendTime);
+
                             String no_of_helpers = data.getString("no_of_helpers");
                             String fb = data.getString("facebook_id");
                             String firstName = data.getString("first_name");

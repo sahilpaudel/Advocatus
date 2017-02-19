@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E5E8E8"
+    android:elevation="8dp">
+
+
+
+    <ImageView
+        android:src="@drawable/com_facebook_profile_picture_blank_square"
+        android:id="@+id/helperImage"
+        android:layout_margin="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/helper_profile_pic" />
+
+    <TextView
+        android:id="@+id/helperName"
+        android:text="Sahil Paudel"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/helperImage"
+        android:layout_margin="20dp"/>
+
+</RelativeLayout>

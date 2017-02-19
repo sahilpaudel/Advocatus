@@ -1,14 +1,18 @@
 package com.sahilpaudel.app.advocatus.fragments;
 
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +33,7 @@ import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +51,9 @@ public class WriteRequestFragment extends Fragment {
     String facebook_id;
     MaterialSpinner mCategory;
 
-    List<String> mListCategory;
     String category;
+
+    private int mYear, mDay, mMonth;
 
     public WriteRequestFragment() {
         // Required empty public constructor
@@ -66,6 +72,64 @@ public class WriteRequestFragment extends Fragment {
         mEndTime = (EditText)view.findViewById(R.id.endTime);
         mSubmit = (Button)view.findViewById(R.id.buttonSubmit);
         facebook_id = SharedPrefFacebook.getmInstance(getActivity()).getUserInfo().get(3);
+
+        mSubmit.setClickable(false);
+        mPost.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+               if (mPost.getText().length() > 30) {
+                   mSubmit.setClickable(true);
+               }
+            }
+        });
+
+        mStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //current date
+                final Calendar c = Calendar.getInstance();
+                 mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        mStartTime.setText(year+"/"+"0"+(month+1)+"/"+day);
+                    }
+                }, mYear, mMonth, mDay);
+                datePicker.show();
+            }
+        });
+
+        mEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //current date
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        mEndTime.setText(year+"/"+"0"+(month+1)+"/"+day);
+                    }
+                }, mYear, mMonth, mDay);
+                datePicker.show();
+            }
+        });
 
         mCategory.setItems("Choose category","Movies", "Trip", "Households", "Personal Grooming","Local Visit","Emergency");
         mCategory.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
