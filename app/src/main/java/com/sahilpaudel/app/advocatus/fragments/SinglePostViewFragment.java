@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +27,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sahilpaudel.app.advocatus.Config;
 import com.sahilpaudel.app.advocatus.R;
+import com.sahilpaudel.app.advocatus.dataprovider.Feeds;
 import com.sahilpaudel.app.advocatus.dataprovider.HelperPerPost;
+import com.sahilpaudel.app.advocatus.facebook.ClickListener;
+import com.sahilpaudel.app.advocatus.facebook.RecyclerTouchListener;
 import com.sahilpaudel.app.advocatus.facebook.SharedPrefFacebook;
 import com.sahilpaudel.app.advocatus.facebook.SimpleDividerItemDecoration;
 import com.sahilpaudel.app.advocatus.recycleradapter.HelperListAdapter;
@@ -55,6 +59,8 @@ public class SinglePostViewFragment extends Fragment {
     String facebook_id;
     String post_id;
 
+    String tempFBID;
+
     ProgressDialog progressDialog;
 
     RecyclerView mRecyclerView;
@@ -80,6 +86,28 @@ public class SinglePostViewFragment extends Fragment {
         String[] data = value.split("<>");
         imageView = (ImageView)view.findViewById(R.id.poster_pic_1);
         textViewName = (TextView)view.findViewById(R.id.tv_posterName_1);
+
+        //facebook to redirect to profile page of user onclick in their name
+        tempFBID = data[6];
+
+        textViewName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment profile = new MyProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("FB_ID",tempFBID);
+                profile.setArguments(bundle);
+
+                if(profile != null) {
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.contentFragment, profile);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
+            }
+        });
+
         textViewPost = (TextView)view.findViewById(R.id.userPost_1);
         textViewHelpers = (TextView)view.findViewById(R.id.nohelpers_1);
         textViewTime = (TextView)view.findViewById(R.id.timeTable_1);

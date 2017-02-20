@@ -153,7 +153,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_gallery :
                 fragment = new WriteRequestFragment();
                 break;
-            case R.id.nav_manage :
+            case R.id.nav_profile :
                 fragment = new MyProfileFragment();
                 break;
             case R.id.nav_slideshow :
@@ -162,9 +162,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_pendingrequest :
                 fragment = new PendingRequestFragment();
                 break;
-            case R.id.nav_profile :
-                fragment = new MyProfileFragment();
-                break;
+
         }
 
         if(fragment != null) {

@@ -56,14 +56,11 @@ public class MyRequestViewAdapter extends RecyclerView.Adapter<MyRequestViewAdap
     @Override
     public void onBindViewHolder(MyRequestViewAdapter.MyViewHolder holder, int position) {
         MyRequestPost feed = list.get(position);
-        String fname = SharedPrefFacebook.getmInstance(context).getUserInfo().get(0);
-        String lname = SharedPrefFacebook.getmInstance(context).getUserInfo().get(1);
+        String fname = feed.firstName;
+        String lname = feed.lastName;
         tv_posterName.setText(fname+" "+lname);
         tv_timeTable.setText(feed.startTime+" to "+feed.endTime);
-        String imageUrl = "https://graph.facebook.com/" + SharedPrefFacebook
-                .getmInstance(context)
-                .getUserInfo()
-                .get(3) + "/picture?type=large";
+        String imageUrl = "https://graph.facebook.com/" +feed.facebook_id+ "/picture?type=large";
 
         Picasso.with(context).load(imageUrl).into(poster_profile);
         tv_numofhelpers.setText(feed.no_of_helpers);
